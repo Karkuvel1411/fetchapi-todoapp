@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>from</title>
+</head>
+
+<body>
+
+    <form onsubmit="createUser()">
+        <div>
+            <label for="email">Enter your email</label>
+            <input type="email" name="email" id="userEmail" autofocus required>
+        </div>
+        <div>
+            <label for="pass">Enter your pass:</label>
+            <input type="password" name="pass" id="userPass" required>
+        </div>
+        <input type="submit" value="Login">
+    </form>
+
+    <script>
+
+        const url = 'http://localhost:8080/users';
+        function createUser() {
+            event.preventDefault();
+            let email = document.getElementById('userEmail').value;
+            let pass = document.getElementById('userPass').value;
+
+            // we have to give the post method
+            const userObj = {
+                Useremail: email,
+                userPass: pass
+            }
+
+            // Below the code for fetch method
+            const requestOption = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userObj)
+            }
+
+            // Below the code for fetch api
+
+            fetch(url, requestOption).then((response) => { // POST
+                if(!response.ok){
+                    throw new Error('Error in Http request')
+                }
+                return response; 
+            }).catch(err =>{
+                console.log(err);
+            })
+
+            alert('successfully login')
+        }   
+        fetch(url).then(res =>{
+            return res;
+        })
+        .then(res =>{
+            console.log(res.json());
+        })
+
+    </script>
+
+</body>
+
+</html>
